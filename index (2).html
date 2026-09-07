@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mekatos — Refresca tu día</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #EC1D7A;
+    --pink-dark: #C41368;
+    --navy: #123B6E;
+    --sky: #4FC8E8;
+    --sky-pale: #EAF8FC;
+    --kiwi: #7CB93F;
+    --kiwi-dark: #4F8C2C;
+    --cream: #F4FBFD;
+    --panel-pink: #FFF1F7;
+    --ink: #123B6E;
+    --paper: #FFFFFF;
+    --radius-tag: 10px 10px 10px 0;
+    --shadow-soft: 0 10px 24px rgba(18,59,110,0.10);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    font-family:'Karla', sans-serif;
+    color:var(--navy);
+    background:var(--cream);
+    line-height:1.55;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Baloo 2', sans-serif;
+    color:var(--navy);
+    margin:0;
+    line-height:1.1;
+  }
+
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(18,59,110,0.08);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 24px;
+    max-width:1080px; margin:0 auto;
+  }
+  .nav .brand{display:flex; align-items:center; gap:10px;}
+  .nav .brand img{height:44px; width:44px; object-fit:contain;}
+  .nav .brand span{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700; font-size:1.15rem; color:var(--pink);
+  }
+  .nav-links{display:flex; align-items:center; gap:22px; font-weight:600; font-size:0.95rem;}
+  .nav-links a{text-decoration:none; color:var(--navy);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Karla', sans-serif; font-weight:700;
+    padding:11px 22px;
+    border-radius:100px;
+    text-decoration:none;
+    border:2px solid transparent;
+    cursor:pointer;
+    font-size:0.95rem;
+    transition:transform 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--pink); color:#fff;}
+  .btn-primary:hover{background:var(--pink-dark);}
+  .btn-outline{background:transparent; border-color:var(--navy); color:var(--navy);}
+  .btn-sky{background:var(--sky); color:var(--navy);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:64px 24px 120px;
+    background:linear-gradient(180deg, #FFFFFF 0%, var(--sky-pale) 100%);
+  }
+  .hero-inner{
+    max-width:1080px; margin:0 auto;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;
+    align-items:center;
+  }
+  .hero-blob{
+    position:absolute; top:-120px; right:-140px;
+    width:420px; height:420px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(79,200,232,0.35), rgba(79,200,232,0) 70%);
+  }
+  .hero-eyebrow{
+    display:inline-block;
+    background:var(--panel-pink);
+    color:var(--pink-dark);
+    font-weight:700;
+    padding:6px 16px;
+    border-radius:100px;
+    font-size:0.85rem;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.2vw, 3.1rem);
+    font-weight:700;
+    max-width:14ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--pink);
+  }
+  .hero p.lead{
+    margin-top:18px;
+    font-size:1.08rem;
+    max-width:46ch;
+    color:#2c4f78;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .hero-art{
+    position:relative;
+    display:flex; justify-content:center; align-items:center;
+  }
+  .hero-art img{
+    width:min(320px, 80%);
+    filter:drop-shadow(0 18px 30px rgba(18,59,110,0.18));
+  }
+  .ice-dot{
+    position:absolute; border-radius:50%;
+    background:var(--sky);
+    opacity:0.5;
+  }
+
+  /* melting divider */
+  .melt{
+    display:block; width:100%; height:64px;
+    margin-top:-2px;
+  }
+
+  /* ---------- Intro strip ---------- */
+  .intro{
+    background:var(--paper);
+    padding:44px 24px;
+  }
+  .intro-inner{
+    max-width:820px; margin:0 auto; text-align:center;
+  }
+  .intro h2{font-size:1.5rem; margin-bottom:14px;}
+  .intro p{color:#2c4f78; font-size:1.02rem;}
+
+  /* ---------- Menu ---------- */
+  .menu-section{padding:70px 24px 40px; background:var(--cream);}
+  .section-head{max-width:640px; margin:0 auto 36px; text-align:center;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
+  .section-head p{color:#2c4f78; margin-top:10px;}
+
+  .tabs{
+    display:flex; justify-content:center; flex-wrap:wrap;
+    gap:10px; margin-bottom:38px;
+  }
+  .tab{
+    font-family:'Karla', sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    padding:10px 20px;
+    border-radius:100px;
+    border:2px solid var(--navy);
+    background:transparent;
+    color:var(--navy);
+    cursor:pointer;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .tab.active{background:var(--navy); color:#fff;}
+
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
+    gap:20px;
+    max-width:960px; margin:0 auto;
+  }
+  .menu-panel{display:none;}
+  .menu-panel.active{display:contents;}
+
+  .item{
+    background:var(--paper);
+    border-radius:var(--radius-tag);
+    padding:0 22px 20px;
+    box-shadow:var(--shadow-soft);
+    position:relative;
+    border-left:5px solid var(--sky);
+    overflow:hidden;
+  }
+  .item.pink{border-left-color:var(--pink);}
+  .item.kiwi{border-left-color:var(--kiwi);}
+  .item.navy{border-left-color:var(--navy);}
+
+  .item-photo{
+    width:calc(100% + 44px);
+    margin:0 -22px 14px -22px;
+    height:150px;
+    object-fit:cover;
+    display:block;
+  }
+  .item h3{font-size:1.08rem; font-weight:600; margin-bottom:2px;}
+  .item p.desc{font-size:0.9rem; color:#4a688a; margin:6px 0 14px;}
+  .item .price{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--pink-dark);
+    font-size:1.15rem;
+  }
+
+  /* ---------- Promo ---------- */
+  .promo{
+    margin:70px auto 0; max-width:1080px;
+    padding:0 24px;
+  }
+  .promo-card{
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:38px clamp(24px,5vw,56px);
+    display:flex; align-items:center; justify-content:space-between;
+    gap:24px; flex-wrap:wrap;
+    position:relative; overflow:hidden;
+  }
+  .promo-card::after{
+    content:"";
+    position:absolute; right:-60px; bottom:-60px;
+    width:220px; height:220px; border-radius:50%;
+    background:rgba(79,200,232,0.18);
+  }
+  .promo-text h2{color:#fff; font-size:clamp(1.4rem,2.6vw,1.9rem); max-width:20ch;}
+  .promo-text p{color:#cfe4f7; margin-top:10px; max-width:40ch;}
+  .promo-price{
+    font-family:'Baloo 2', sans-serif;
+    background:var(--sky);
+    color:var(--navy);
+    font-weight:800;
+    font-size:1.6rem;
+    padding:16px 26px;
+    border-radius:16px;
+    white-space:nowrap;
+    z-index:1;
+  }
+  .promo-price small{display:block; font-family:'Karla', sans-serif; font-weight:600; font-size:0.7rem;}
+
+  /* ---------- Contacto ---------- */
+  .contact{padding:80px 24px; background:var(--paper);}
+  .contact-inner{
+    max-width:1000px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr; gap:40px;
+  }
+  .contact-info h2{font-size:clamp(1.6rem,2.8vw,2rem); margin-bottom:16px;}
+  .info-row{display:flex; gap:14px; margin-bottom:18px; align-items:flex-start;}
+  .info-row .ic{width:24px; height:24px; flex:none; margin-top:2px;}
+  .info-row strong{display:block; font-size:0.95rem;}
+  .info-row span{color:#4a688a; font-size:0.92rem;}
+
+  .whatsapp-card{
+    background:var(--panel-pink);
+    border-radius:24px;
+    padding:36px;
+    text-align:center;
+  }
+  .whatsapp-card p{color:#5a3350; margin:12px 0 22px; font-size:0.95rem;}
+  .whatsapp-card .btn{width:100%; justify-content:center; font-size:1.02rem; padding:14px;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--navy);
+    color:#cfe0f0;
+    padding:36px 24px 28px;
+    text-align:center;
+    font-size:0.88rem;
+  }
+  footer .brand-line{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin-bottom:10px;
+  }
+  footer .brand-line img{height:30px; width:30px;}
+  footer .brand-line span{font-family:'Baloo 2', sans-serif; color:#fff; font-weight:700;}
+
+  @media (max-width:820px){
+    .hero-inner{grid-template-columns:1fr; text-align:center;}
+    .hero p.lead{margin-left:auto; margin-right:auto;}
+    .hero-actions{justify-content:center;}
+    .hero h1{max-width:none;}
+    .nav-links a.hide-mobile{display:none;}
+    .contact-inner{grid-template-columns:1fr;}
+    .promo-card{justify-content:center; text-align:center;}
+    .promo-text{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <div class="brand">
+      <img src="assets/logo.png" alt="Logo de Mekatos">
+    </div>
+    <div class="nav-links">
+      <a href="#menu" class="hide-mobile">Menú</a>
+      <a href="#contacto" class="hide-mobile">Contacto</a>
+      <a href="https://wa.me/573102213879" class="btn btn-primary" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-blob"></div>
+  <div class="hero-inner">
+    <div>
+      <span class="hero-eyebrow">Raspados · Helados · Postres</span>
+      <h1>Postres fríos para los días de <em>calor</em></h1>
+      <p class="lead">En Mekatos preparamos raspados, helados y postres al momento, con fruta fresca y bastante hielo. El antojo perfecto para la salida del colegio o una tarde calurosa.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-primary">Ver el menú</a>
+        <a href="https://wa.me/573102213879" class="btn btn-outline" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="ice-dot" style="width:60px;height:60px; top:10px; left:10px;"></div>
+      <div class="ice-dot" style="width:30px;height:30px; bottom:20px; right:30px; background:var(--pink); opacity:0.3;"></div>
+      <img src="assets/logo.png" alt="Mekatos - Refresca tu día">
+    </div>
+  </div>
+
+  <svg class="melt" viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,20 C150,60 350,0 500,25 C650,50 800,5 950,25 C1050,38 1150,10 1200,20 L1200,60 L0,60 Z" fill="#FFFFFF"/>
+  </svg>
+</section>
+
+<section class="intro">
+  <div class="intro-inner">
+    <h2>Hecho al momento, todos los días</h2>
+    <p>Nada de congelados de fábrica: cada raspado se raspa cuando lo pides, cada helado se sirve recién sacado y cada postre se arma en el mostrador. Así sabe mejor y así refrescamos tu día de verdad.</p>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <!-- Cada tarjeta de producto usa una foto de la carpeta assets/fotos.
+       Para poner tu propia foto: sube tu imagen a esa carpeta con el
+       mismo nombre de archivo que la foto de ejemplo (por ejemplo
+       raspado-clasico.jpg) y GitHub la reemplazará automáticamente. -->
+  <div class="section-head">
+    <h2>Nuestro menú</h2>
+    <p>Elige una categoría y encuentra tu antojo.</p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-tab="raspados">Raspados</button>
+    <button class="tab" data-tab="helados">Helados</button>
+    <button class="tab" data-tab="postres">Postres</button>
+    <button class="tab" data-tab="frios">Mekatos fríos</button>
+  </div>
+
+  <div class="wrap" style="padding:0;">
+    <div class="menu-grid">
+
+      <div class="menu-panel active" data-panel="raspados">
+        <div class="item">
+          <img class="item-photo" src="assets/fotos/raspado-clasico.jpg" alt="Foto de Raspado clásico">
+          <h3>Raspado clásico</h3>
+          <p class="desc">Mora, limón o tamarindo, con hielo raspado al momento.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$6.000</div>
+        </div>
+        <div class="item pink">
+          <img class="item-photo" src="assets/fotos/raspado-kiwi-fresa.jpg" alt="Foto de Raspado kiwi-fresa">
+          <h3>Raspado kiwi-fresa</h3>
+          <p class="desc">Con leche condensada por encima. El más pedido.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$8.500</div>
+        </div>
+        <div class="item kiwi">
+          <img class="item-photo" src="assets/fotos/raspado-tropical.jpg" alt="Foto de Raspado tropical">
+          <h3>Raspado tropical</h3>
+          <p class="desc">Mango, maracuyá y coco rallado.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$8.000</div>
+        </div>
+      </div>
+
+      <div class="menu-panel" data-panel="helados">
+        <div class="item navy">
+          <img class="item-photo" src="assets/fotos/helado-1-bola.jpg" alt="Foto de Helado en vaso (1 bola)">
+          <h3>Helado en vaso (1 bola)</h3>
+          <p class="desc">Elige entre vainilla, chocolate o fresa.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$4.500</div>
+        </div>
+        <div class="item">
+          <img class="item-photo" src="assets/fotos/helado-2-bolas.jpg" alt="Foto de Helado en vaso (2 bolas)">
+          <h3>Helado en vaso (2 bolas)</h3>
+          <p class="desc">Combina dos sabores, más topping a elegir.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$7.000</div>
+        </div>
+        <div class="item pink">
+          <img class="item-photo" src="assets/fotos/banana-split.jpg" alt="Foto de Banana split">
+          <h3>Banana split</h3>
+          <p class="desc">Tres bolas de helado, banano, crema y chispas.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$12.000</div>
+        </div>
+      </div>
+
+      <div class="menu-panel" data-panel="postres">
+        <div class="item kiwi">
+          <img class="item-photo" src="assets/fotos/cheesecake-fresa.jpg" alt="Foto de Cheesecake de fresa">
+          <h3>Cheesecake de fresa</h3>
+          <p class="desc">Base de galleta, queso crema y salsa de fresa natural.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$9.000</div>
+        </div>
+        <div class="item navy">
+          <img class="item-photo" src="assets/fotos/brownie-helado.jpg" alt="Foto de Brownie con helado">
+          <h3>Brownie con helado</h3>
+          <p class="desc">Brownie tibio, bola de helado y salsa de chocolate.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$10.500</div>
+        </div>
+        <div class="item">
+          <img class="item-photo" src="assets/fotos/tres-leches.jpg" alt="Foto de Vasito de tres leches">
+          <h3>Vasito de tres leches</h3>
+          <p class="desc">Bizcocho húmedo bañado en tres leches, con canela.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$8.000</div>
+        </div>
+      </div>
+
+      <div class="menu-panel" data-panel="frios">
+        <div class="item">
+          <img class="item-photo" src="assets/fotos/paleta-agua.jpg" alt="Foto de Paleta de agua">
+          <h3>Paleta de agua</h3>
+          <p class="desc">Varios sabores de fruta natural, sin leche.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$3.000</div>
+        </div>
+        <div class="item pink">
+          <img class="item-photo" src="assets/fotos/paleta-cremosa.jpg" alt="Foto de Paleta cremosa">
+          <h3>Paleta cremosa</h3>
+          <p class="desc">Vainilla o chocolate, cubierta con chispas.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$4.500</div>
+        </div>
+        <div class="item kiwi">
+          <img class="item-photo" src="assets/fotos/gelatina-crema.jpg" alt="Foto de Gelatina con crema">
+          <h3>Gelatina con crema</h3>
+          <p class="desc">Gelatina de mora o piña, crema de leche y galleta molida.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$4.000</div>
+        </div>
+        <div class="item navy">
+          <img class="item-photo" src="assets/fotos/mini-donas.jpg" alt="Foto de Mini donas congeladas">
+          <h3>Mini donas congeladas</h3>
+          <p class="desc">Bañadas en chocolate, servidas bien frías.</p>
+          <!-- Para cambiar el precio, edita el número de abajo -->
+          <div class="price">$5.000</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="promo">
+  <div class="promo-card">
+    <div class="promo-text">
+      <h2>Combo Refrescante: miércoles y viernes</h2>
+      <p>Un raspado clásico más una paleta cremosa, listos para llevar o comer en el local.</p>
+    </div>
+    <div class="promo-price">$9.000<small>combo completo</small></div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <h2>Visítanos o pide desde el celular</h2>
+
+      <div class="info-row">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z" stroke="#EC1D7A" stroke-width="2"/><circle cx="12" cy="10" r="2.5" stroke="#EC1D7A" stroke-width="2"/></svg>
+        <div>
+          <strong>Dirección</strong>
+          <span>Villanueva, Casanare</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#4FC8E8" stroke-width="2"/><path d="M12 7v5l3 2" stroke="#4FC8E8" stroke-width="2" stroke-linecap="round"/></svg>
+        <div>
+          <strong>Horario</strong>
+          <span>Lunes a sábado: 12:00 m. – 8:00 p.m.<br>Domingos: 2:00 p.m. – 7:00 p.m.</span>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 5 5L15 12l5 2v3a2 2 0 0 1-2 2C10.5 19 5 13.5 5 6a2 2 0 0 1 1-3Z" stroke="#7CB93F" stroke-width="2" stroke-linejoin="round"/></svg>
+        <div>
+          <strong>Teléfono / WhatsApp</strong>
+          <span>310 221 3879</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="whatsapp-card">
+      <img src="assets/logo.png" alt="" style="width:70px; margin:0 auto 12px;">
+      <h3>¿Ya sabes qué vas a pedir?</h3>
+      <p>Escríbenos por WhatsApp y te confirmamos el pedido al momento.</p>
+      <a href="https://wa.me/573102213879" class="btn btn-primary" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand-line">
+    <img src="assets/logo.png" alt="Logo de Mekatos">
+    <span>Mekatos</span>
+  </div>
+  <p>Refresca tu día — hecho con cariño para el barrio.</p>
+  <p style="font-size:0.75rem; color:#8fa9c4; margin-top:6px;">Página creada por Karlay Jaimes</p>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.menu-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.menu-panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
